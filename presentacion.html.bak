@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Agente de Equilibrio de Juego - Reporte Técnico</title>
+
+  <!-- Reveal.js Themes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+
+  <style>
+    :root {
+      --primary-color: #003366;
+      --secondary-color: #0066cc;
+      --accent-color: #6c757d;
+      --bg-color: #f8f9fa;
+    }
+
+    .reveal { font-family: 'Segoe UI', 'Roboto', sans-serif; color: #333; font-size: 26px; }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 { color: var(--primary-color); text-transform: none; font-weight: 700; }
+    .reveal h2 { border-bottom: 3px solid var(--secondary-color); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.6em; }
+
+    /* Logos Header */
+    .header-logos { display: flex; justify-content: space-between; padding: 0 20px; margin-bottom: 20px; }
+    .logo-img { height: 70px; width: auto; background: rgba(255,255,255,0.9); padding: 5px; border-radius: 5px; }
+
+    /* Portada */
+    .portada-bg {
+      background: linear-gradient(160deg, var(--primary-color) 0%, #1a4a7c 100%);
+      color: white !important; padding: 30px; border-radius: 15px; height: 100%;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .portada-bg h1, .portada-bg p { color: white !important; }
+    .portada-bg h2 { color: white !important; border-color: rgba(255,255,255,0.3); }
+
+    /* Estructura */
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; text-align: left; }
+    .box { background: var(--bg-color); border-left: 5px solid var(--secondary-color); padding: 15px; margin: 10px 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    
+    /* Diagram Placeholder - ESTILO PARA LOS DIAGRAMAS */
+    .diagram-box {
+      border: 2px dashed #ccc;
+      background: #fff;
+      height: 450px; /* Altura fija para que no se desborde */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 10px auto;
+      border-radius: 8px;
+      color: #666;
+    }
+    .diagram-box img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    /* Tablas y Scroll */
+    table { font-size: 0.7em !important; width: 100%; border-collapse: collapse; }
+    table th { background: var(--primary-color); color: white; padding: 8px; }
+    table td { border-bottom: 1px solid #ddd; padding: 6px; }
+    .badge { padding: 3px 6px; border-radius: 4px; color: white; font-size: 0.8em; font-weight: bold; }
+    .badge.success { background: #28a745; } .badge.warning { background: #ffc107; color: #333; } .badge.info { background: #17a2b8; }
+    .scroll-container { max-height: 500px; overflow-y: auto; }
+
+    /* Referencias APA */
+    .apa-ref { font-size: 0.6em; text-align: left; margin-bottom: 8px; padding-left: 20px; text-indent: -20px; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- 1. PORTADA (1 diapositiva) -->
+  <section data-transition="zoom">
+    <div class="portada-bg">
+      <div class="header-logos">
+        <!-- REEMPLAZA CON TUS LOGOS -->
+        <img src="LOGO_UPTapachula.png" class="logo-img">
+        <img src="LOGO_ITIID.jpg" class="logo-img">
+        <img src="LOGO_PLURIONE.png" class="logo-img">
+      </div>
+      <h1 style="font-size: 1.5em; margin-bottom: 10px;">Agente de Equilibrio de Juego para Mini Orquestador de Desarrollo de Videojuegos</h1>
+      <p style="font-size: 0.9em; opacity: 0.9;">Informe Técnico de Estadía</p>
+      
+      <div class="cols" style="margin-top: 30px; font-size: 0.7em; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px;">
+        <div><strong>Presenta:</strong><br>Pablo Julián Garay de León<br>Ingeniería en Software</div>
+        <div style="text-align: right;"><strong>Asesores:</strong><br>Acad.: Karina Cancino Villatoro<br>Lab.: Ramsés Hernández</div>
+      </div>
+      <p style="margin-top: 20px; font-size: 0.6em;">Octubre 2025</p>
+    </div>
+  </section>
+
+  <!-- 2. ÍNDICE (1 diapositiva) -->
+  <section>
+    <h2>Índice de Contenido</h2>
+    <div class="cols" style="font-size: 0.8em;">
+      <ol>
+        <li>Introducción</li>
+        <li>Planteamiento del Problema</li>
+        <li>Justificación</li>
+        <li>Objetivos</li>
+        <li>Hipótesis</li>
+        <li>Metodología</li>
+      </ol>
+      <ol start="7">
+        <li>Cronograma de Actividades</li>
+        <li>Resultados y Discusiones</li>
+        <li>Conclusiones</li>
+        <li>Competencia Cumplida</li>
+        <li>Referencias</li>
+        <li>Anexos</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 3. INTRODUCCIÓN (1-3 diapositivas) -->
+  <section>
+    <section>
+      <h2>1. Introducción</h2>
+      <div class="cols">
+        <div>
+          <h3>Contexto del Proyecto</h3>
+          <p style="text-align: justify; font-size: 0.8em;">
+            Desarrollado en colaboración con <strong>Develop Talent & Technology</strong> dentro del programa TODO Academy. El proyecto es un módulo clave del "Mini Orquestador de Videojuegos", diseñado para asistir en la toma de decisiones creativas mediante IA.
+          </p>
+        </div>
+        <div>
+          <h3>Antecedentes</h3>
+          <ul style="font-size: 0.8em;">
+            <li><strong>Problemática:</strong> El balanceo tradicional es subjetivo y lento.</li>
+            <li><strong>Estado del Arte:</strong> Empresas como Riot Games y DeepMind utilizan IA y Big Data.</li>
+            <li><strong>Oportunidad:</strong> Integrar LLMs (Modelos de Lenguaje) para democratizar este análisis.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section>
+      <h3>Impacto Esperado</h3>
+      <div class="box">
+        <ul style="font-size: 0.8em;">
+          <li><strong>En la Industria:</strong> Herramienta automatizada accesible para estudios independientes.</li>
+          <li><strong>En la Organización:</strong> Optimización de recursos mediante agentes autónomos.</li>
+          <li><strong>Académico:</strong> Implementación práctica de sistemas multi-agente con LangChain.</li>
+        </ul>
+      </div>
+    </section>
+  </section>
+
+  <!-- 4. PLANTEAMIENTO DEL PROBLEMA (1 diapositiva) -->
+  <section>
+    <h2>2. Planteamiento del Problema</h2>
+    <div class="box" style="border-left-color: #dc3545; background: #fff5f5;">
+      <h4 style="color: #dc3545; margin:0;">Problema Central</h4>
+      <p style="font-size: 0.9em;">Los estudios de desarrollo carecen de herramientas automatizadas para analizar objetivamente el balance, dependiendo de la subjetividad y reacciones tardías a las quejas de los jugadores.</p>
+    </div>
+    <div class="cols" style="font-size: 0.8em; margin-top: 20px;">
+      <div>
+        <strong>Causas:</strong>
+        <ul>
+          <li>Volúmenes masivos de telemetría inmanejables manualmente.</li>
+          <li>Falta de métricas estandarizadas.</li>
+        </ul>
+      </div>
+      <div>
+        <strong>Efectos:</strong>
+        <ul>
+          <li>Ciclos de corrección de 4+ semanas.</li>
+          <li>Metas estancados y pérdida de jugadores.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. JUSTIFICACIÓN (1 diapositiva) -->
+  <section>
+    <h2>3. Justificación</h2>
+    <div class="cols">
+      <div>
+        <h4>Relevancia Industrial</h4>
+        <ul style="font-size: 0.75em; text-align: justify;">
+          <li>El mercado global es de <strong>$184 mil millones</strong> (Newzoo, 2023).</li>
+          <li>El desbalance es la <strong>2da causa de abandono</strong> en juegos competitivos (Drachen et al., 2018).</li>
+          <li>Un meta roto puede costar entre el <strong>15-30%</strong> de la retención de usuarios (Jaffe, 2013).</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Viabilidad Técnica</h4>
+        <div class="box" style="font-size: 0.75em;">
+          El proyecto es viable mediante el uso de tecnologías Open Source (Python), frameworks modernos (LangChain) y la disponibilidad de APIs públicas, reduciendo la barrera de entrada técnica.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. OBJETIVOS (1-2 diapositivas) -->
+  <section>
+    <h2>4. Objetivos</h2>
+    <div class="box" style="font-size: 0.9em;">
+      <strong>Objetivo General:</strong> Desarrollar un sistema de agentes de IA especializados en análisis y balanceo, integrado con LLMs y motores de juego para el Mini Orquestador.
+    </div>
+    <div class="scroll-container">
+      <table style="font-size: 0.7em !important;">
+        <thead><tr><th>Objetivos Específicos</th><th>Estado (Semana 4)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>OE1:</strong> Diseñar agentes con LangChain para análisis.</td><td><span class="badge warning">En Progreso (40%)</span></td></tr>
+          <tr><td><strong>OE2:</strong> Desarrollar integración con Unity/Unreal.</td><td><span class="badge info">Preparación Lista</span></td></tr>
+          <tr><td><strong>OE3:</strong> Implementar dashboard interactivo.</td><td><span class="badge">Pendiente</span></td></tr>
+          <tr><td><strong>OE4:</strong> Integrar vía API REST al Orquestador.</td><td><span class="badge info">Diseño Listo</span></td></tr>
+          <tr><td><strong>OE5:</strong> Validar precisión (≥75%) con datos históricos.</td><td><span class="badge info">Datos Listos</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 7. HIPÓTESIS (1 diapositiva) -->
+  <section>
+    <h2>5. Hipótesis</h2>
+    <div class="box" style="text-align: center; padding: 40px;">
+      <p style="font-size: 1.2em; font-style: italic;">
+        "Un agente de IA con análisis estadístico avanzado puede detectar desbalances con <strong>precisión ≥ 75%</strong> y reducir el tiempo de análisis en <strong>≥ 30%</strong> comparado con procesos manuales."
+      </p>
+    </div>
+    <p style="font-size: 0.7em; text-align: center; color: #666;">
+      *Variables controladas: Género del videojuego, tamaño del dataset y experiencia del evaluador.
+    </p>
+  </section>
+
+  <!-- 8. METODOLOGÍA (1-3 diapositivas) -->
+  <section>
+    <section>
+      <h2>6. Metodología</h2>
+      <div class="cols">
+        <div>
+          <h3>Marco de Trabajo</h3>
+          <ul style="font-size: 0.8em;">
+            <li><strong>Metodología:</strong> Scrum (Sprints de 1 semana).</li>
+            <li><strong>Duración:</strong> 15 Semanas.</li>
+            <li><strong>Métricas Clave:</strong> Win Rate (48-52%), Índice HHI (Diversidad del Meta).</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Diseño Técnico</h3>
+          <p style="font-size: 0.8em;">Se utiliza una arquitectura de <strong>Sistema Multi-Agente</strong> orquestada por LangChain para gestionar las consultas a Modelos de Lenguaje (LLMs).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAGRAMA 1: ARQUITECTURA -->
+    <section>
+      <h3>Arquitectura del Sistema</h3>
+      <!-- AQUÍ VA EL DIAGRAMA DE LA FIGURA 8.1 DEL PDF -->
+      <div class="diagram-box">
+        <!-- Reemplaza este src con la captura de la Figura 8.1 -->
+        <img src="https://via.placeholder.com/600x400?text=Insertar+Figura+8.1+Aquitectura+Multi-Agente" alt="Figura 8.1">
+        <p style="font-size: 0.6em; margin-top: 10px;">Figura 8.1: Arquitectura del Sistema Multi-Agente con LLMs (Fuente: Reporte Técnico)</p>
+      </div>
+    </section>
+
+    <!-- DIAGRAMA 2: FLUJO -->
+    <section>
+      <h3>Flujo del Proceso de Balanceo</h3>
+      <!-- AQUÍ VA EL DIAGRAMA DE LA FIGURA 10.1 DEL PDF -->
+      <div class="diagram-box">
+        <!-- Reemplaza este src con la captura de la Figura 10.1 -->
+        <img src="https://via.placeholder.com/400x450?text=Insertar+Figura+10.1+Diagrama+de+Flujo" alt="Figura 10.1">
+        <p style="font-size: 0.6em; margin-top: 10px;">Figura 10.1: Flujo Lógico de Detección de Desbalances (Fuente: Reporte Técnico)</p>
+      </div>
+    </section>
+  </section>
+
+  <!-- 9. CRONOGRAMA (1 diapositiva) -->
+  <section>
+    <h2>7. Cronograma de Actividades</h2>
+    <div class="scroll-container">
+      <table style="font-size: 0.65em !important;">
+        <thead>
+          <tr><th width="10%">Sem</th><th>Actividad</th><th width="15%">Estado</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:#d4edda"><td>1-4</td><td>Análisis, Diseño Arquitectónico y Preparación de Datasets</td><td><span class="badge success">Completado</span></td></tr>
+          <tr style="background:#fff3cd; font-weight:bold;"><td>5</td><td>Desarrollo del Módulo de Análisis (Codificación)</td><td><span class="badge warning">En Progreso</span></td></tr>
+          <tr><td>6-8</td><td>Implementación de Recomendaciones e Interfaces</td><td><span class="badge">Pendiente</span></td></tr>
+          <tr><td>9-10</td><td>Pruebas Unitarias y Calibración</td><td><span class="badge">Pendiente</span></td></tr>
+          <tr><td>11-12</td><td>Validación e Integración en Orquestador</td><td><span class="badge">Pendiente</span></td></tr>
+          <tr><td>13-15</td><td>Optimización, Reporte Final y Entrega</td><td><span class="badge">Pendiente</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 0.6em; text-align: center; margin-top: 10px;">Reporte al cierre de la Semana 4 (Fase de Preparación Completada).</p>
+  </section>
+
+  <!-- 10. RESULTADOS Y DISCUSIONES (1-5 diapositivas) -->
+  <section>
+    <section>
+      <h2>8. Resultados y Discusiones</h2>
+      <div class="cols">
+        <div class="box">
+          <h4>Documentación (Logro 1)</h4>
+          <ul style="font-size: 0.7em;">
+            <li>Análisis de Requerimientos v1.0 completo.</li>
+            <li>Definición de variables críticas del sistema.</li>
+            <li>Backlog priorizado (15 Requerimientos).</li>
+          </ul>
+        </div>
+        <div class="box" style="border-left-color: var(--primary-color);">
+          <h4>Investigación Técnica (Logro 2)</h4>
+          <ul style="font-size: 0.7em;">
+            <li>Evaluación de LLMs (GPT-4 vs Claude vs Gemini).</li>
+            <li>Selección de LangChain como orquestador.</li>
+            <li>Estrategia de <em>fallback</em> para manejo de errores.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAGRAMA 3: AGENTE ESPECÍFICO -->
+    <section>
+      <h3>Diseño del Agente de Equilibrio</h3>
+      <!-- AQUÍ VA EL DIAGRAMA DE LA FIGURA 11.2 DEL PDF -->
+      <div class="diagram-box">
+        <!-- Reemplaza este src con la captura de la Figura 11.2 -->
+        <img src="https://via.placeholder.com/300x500?text=Insertar+Figura+11.2+Arquitectura+Agente" alt="Figura 11.2">
+        <p style="font-size: 0.6em; margin-top: 10px;">Figura 11.2: Estructura interna del Agente de Equilibrio (Fuente: Reporte Técnico)</p>
+      </div>
+    </section>
+
+    <section>
+      <h3>Preparación de Datos (Logro 4)</h3>
+      <p style="font-size: 0.8em; text-align: justify;">
+        Se han recopilado, limpiado y estructurado <strong>datasets de prueba</strong> representativos. Esto es crucial para la validación futura (Semana 11), permitiendo probar los algoritmos sin depender de telemetría en tiempo real durante el desarrollo inicial.
+      </p>
+      <div class="box" style="font-size: 0.8em;">
+        <strong>Resultado Clave:</strong> Entorno de desarrollo configurado y listo para la implementación de algoritmos en la Semana 5.
+      </div>
+    </section>
+  </section>
+
+  <!-- 11. CONCLUSIONES (1 diapositiva) -->
+  <section>
+    <h2>9. Conclusiones</h2>
+    <div class="cols">
+      <div>
+        <h4>Logros Parciales</h4>
+        <ul style="font-size: 0.75em;">
+          <li>Fase de preparación concluida exitosamente.</li>
+          <li>Diseño de arquitectura escalable que soporta múltiples LLMs.</li>
+          <li>Hoja de ruta clara para la fase de implementación.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trabajo Futuro</h4>
+        <ul style="font-size: 0.75em;">
+          <li>Codificación de algoritmos de detección (Sem 5).</li>
+          <li>Integración de APIs de Unity/Unreal (Sem 7).</li>
+          <li>Validación empírica de la precisión del 75% (Sem 11).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. COMPETENCIA CUMPLIDA (1 diapositiva) -->
+  <section>
+    <h2>10. Competencia Cumplida</h2>
+    <div class="box" style="background: #eef4fb; text-align: center; padding: 30px;">
+      <p style="font-size: 0.9em; font-style: italic;">
+        "Desarrollar sistemas de software mediante la aplicación de metodologías ágiles, arquitecturas robustas y tecnologías emergentes, integrando soluciones de inteligencia artificial para resolver problemas complejos en dominios especializados."
+      </p>
+    </div>
+    <div style="text-align: center; margin-top: 30px;">
+      <span class="badge success">Ingeniería de Software</span>
+      <span class="badge success">Inteligencia Artificial</span>
+      <span class="badge success">Scrum</span>
+    </div>
+  </section>
+
+  <!-- 13. REFERENCIAS (1 diapositiva) -->
+  <section>
+    <h2>11. Referencias</h2>
+    <div class="scroll-container">
+      <div class="apa-ref">Chase, H. (2023). <em>LangChain: Building Applications with LLMs through Composability</em>. GitHub.</div>
+      <div class="apa-ref">Drachen, A., Mirza-Babaei, P., & Nacke, L. E. (2018). <em>Game Data Science: Maximizing the Value of Player Data</em>. Oxford University Press.</div>
+      <div class="apa-ref">Hsu, S.-H., Wang, S.-H., & Shiau, J.-J. H. (2022). Applying Machine Learning to Game Balance: A Systematic Literature Review. <em>IEEE Access, 10</em>.</div>
+      <div class="apa-ref">Jaffe, A. (2013). The Theory, Craft and Practice of Game Balance. <em>Game Developer Magazine</em>.</div>
+      <div class="apa-ref">Newzoo. (2023). <em>Global Games Market Report 2023</em>.</div>
+      <div class="apa-ref">Riot Games. (2021). <em>Quick Gameplay Thoughts: Balance Framework</em>. League of Legends News.</div>
+      <div class="apa-ref">Unity Technologies. (2022). <em>Unity ML-Agents Toolkit</em>. GitHub Repository.</div>
+    </div>
+  </section>
+
+  <!-- 14. ANEXOS (1 diapositiva) -->
+  <section>
+    <h2>12. Anexos: Requerimientos Prioritarios</h2>
+    <div class="scroll-container">
+      <table style="font-size: 0.65em !important;">
+        <thead><tr><th>ID</th><th>Requerimiento Funcional</th><th>Prioridad</th><th>Sprint</th></tr></thead>
+        <tbody>
+          <tr><td>RF-01</td><td>Análisis de parámetros de juego (Daño, Vida)</td><td><span class="badge warning">Alta</span></td><td>5</td></tr>
+          <tr><td>RF-02</td><td>Cálculo de métricas (Win Rate, Pick Rate)</td><td><span class="badge warning">Alta</span></td><td>5-6</td></tr>
+          <tr><td>RF-03</td><td>Índice de diversidad del meta (HHI)</td><td><span class="badge warning">Alta</span></td><td>6</td></tr>
+          <tr><td>RF-06</td><td>Sistema de recomendaciones automáticas</td><td><span class="badge warning">Alta</span></td><td>7</td></tr>
+          <tr><td>RF-07</td><td>Detección de anomalías (Outliers)</td><td><span class="badge warning">Alta</span></td><td>6</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 15. AGRADECIMIENTOS (Nueva Diapositiva) -->
+  <section data-transition="zoom">
+    <div class="portada-bg">
+      <h2 style="color: white; border-bottom: 2px solid rgba(255,255,255,0.5); font-size: 1.8em;">Agradecimientos</h2>
+      
+      <div style="background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 10px; margin-top: 30px;">
+        <p style="font-size: 0.9em; color: white; line-height: 1.6; margin-bottom: 25px;">
+          A la <strong>Dra. Karina Cancino Villatoro</strong>,<br>
+          por su invaluable guía, el tiempo dedicado y todo el conocimiento que nos aportó durante la carrera. Su mentoría ha sido fundamental en mi formación profesional.
+        </p>
+        
+        <hr style="border-color: rgba(255,255,255,0.2); margin: 25px 0;">
+        
+        <p style="font-size: 0.85em; color: white; opacity: 0.9;">
+          A todos mis <strong>maestros y docentes</strong> de la Universidad Politécnica de Tapachula,<br>
+          quienes con vocación y esfuerzo se esmeraron por enseñarnos y brindarnos las herramientas necesarias para alcanzar este logro.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true, transition: 'slide', slideNumber: true, center: true, width: 1200, height: 700, margin: 0.04,
+    plugins: [ RevealMarkdown, RevealHighlight ]
+  });
+</script>
+</body>
+</html>
